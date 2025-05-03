@@ -1,5 +1,6 @@
 import http from 'http';//feita em tempo de compilação, forma assíncrona.
 import fs from 'fs';
+import rotas from './routes.js';
 
 fs.writeFile('./mensagem.txt', 'Olá, Tic em Trilhas do arquivo!', 'utf-8', (erro) =>{
     if (erro){
@@ -21,12 +22,15 @@ fs.readFile('./mensagem.txt', 'utf-8', (erro, conteudo) => {
 })
 
 //ENCAPSULAMENTO:
-function iniciaServidorHttp(mensagem) {
+function iniciaServidorHttp(conteudo) {//ao fazer deste jeito, a mensagem ficará visível no terminal e no servidor também
     const servidor = http.createServer((req, res) => {
-        //INSTANCIAÇÂO
+        /*
+        INSTANCIAÇÂO
         res.statusCode = 200;//estrutura básica http
         res.setHeader('Content-type', 'text/plain; charset=utf-8');
         res.end(mensagem);
+        */
+        rotas(req, res, {conteudo});
     });
     
     const porta = 3000;
